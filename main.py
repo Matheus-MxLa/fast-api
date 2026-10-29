@@ -26,6 +26,7 @@ def representar_produto(produto):
         "preco": format(produto["preco"], ".2f"),
     }
 
+
 @app.get("/produtos")
 def listar_produtos():
     sql = "SELECT id, nome, categoria, preco FROM produtos ORDER BY id"
@@ -35,6 +36,7 @@ def listar_produtos():
         "dados": [representar_produto(produto) for produto in produtos],
         "sintaxesql": {"sql": sql, "parametros": []},
     }
+
 
 @app.get("/produtos/{produto_id}")
 def consultar_produto(produto_id: int = Path(gt=0)):
@@ -49,6 +51,7 @@ def consultar_produto(produto_id: int = Path(gt=0)):
         "sintaxesql": {"sql": sql, "parametros": parametros},
     }
 
+
 @app.get("/produtos_categoria")
 def listar_produtos_por_categoria(
     categoria: str | None = Query(
@@ -57,8 +60,8 @@ def listar_produtos_por_categoria(
         description="Filtra os produtos pela categoria informada.",
         min_length=1,
         max_length=50,
-        )
-    ):  
+    ),
+):
     sql = "SELECT id, nome, categoria, preco FROM produtos"
     parametros = ()
 
